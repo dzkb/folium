@@ -94,6 +94,11 @@ class TimestampedGeoJson(MacroElement):
                 {{ this.options|tojson }}
             );
             {{this._parent.get_name()}}.addControl(this.timeDimensionControl);
+            if (controls === undefined) {
+                var controls = [];
+            }
+            controls.push(timeDimensionControl);
+
 
             var geoJsonLayer = L.geoJson({{this.data}}, {
                     pointToLayer: function (feature, latLng) {
@@ -243,3 +248,38 @@ class TimestampedGeoJson(MacroElement):
                         ],
                     ]
         return bounds
+
+
+class TimestampedGeoJsonSynchronizer(MacroElement):
+    _template = Template("""
+        {% macro script(this, kwargs) %}
+            setTimeout(() => {
+                for (var i = 0; i < controls.length; i++) {
+                    for (var j = 0; j < controls.length; j++) {
+                        print(controls[i]);
+                        if (i != j) {
+                            const parent = controls[i]._player;
+                            const child = controls[j]._player;
+                            parent.on("play", () => {
+                                console.log(i, "xD");
+                                child.start();
+                            });
+                            parent.on("stop", () => {
+                                child.stop();
+                            });
+                            parent.on("pause", () => {
+                                child.stop();
+                            });
+                            parent.on
+                        }
+                    }
+                }
+            }, 200);
+        {% endmacro %}
+    """)
+
+    def __init__(self):
+        super(TimestampedGeoJsonSynchronizer, self).__init__()
+        
+    def render(self, **kwargs):
+        super(TimestampedGeoJsonSynchronizer, self).render()
