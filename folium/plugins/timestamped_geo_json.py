@@ -100,7 +100,9 @@ class TimestampedGeoJson(MacroElement):
                         if (feature.properties.icon == 'marker') {
                             if(feature.properties.iconstyle){
                                 return new L.Marker(latLng, {
-                                    icon: L.icon(feature.properties.iconstyle)});
+                                    icon: L.icon(feature.properties.iconstyle), 
+                                    opacity: feature.properties.opacity || 1
+                                });
                             }
                             //else
                             return new L.Marker(latLng);
