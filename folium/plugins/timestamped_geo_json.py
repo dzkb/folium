@@ -256,7 +256,6 @@ class TimestampedGeoJsonSynchronizer(MacroElement):
             setTimeout(() => {
                 for (var i = 0; i < controls.length; i++) {
                     for (var j = 0; j < controls.length; j++) {
-                        print(controls[i]);
                         if (i != j) {
                             const parent = controls[i]._player;
                             const child = controls[j]._player;
